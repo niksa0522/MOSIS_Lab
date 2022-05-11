@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/MOSIS_Lab.iml" filepath="$PROJECT_DIR$/.idea/MOSIS_Lab.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/My_Places.iml" filepath="$PROJECT_DIR$/.idea/modules/My_Places.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/My_Places.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/My_Places.app.iml" />
     </modules>
   </component>
 </project>
