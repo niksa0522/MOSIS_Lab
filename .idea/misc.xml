@@ -5,9 +5,14 @@
       <map>
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout-land/fragment_first.xml" value="0.31040564373897706" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/about.xml" value="0.35260416666666666" />
+        <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/activity_main.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/activity_my_places_list.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/content_main.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/content_my_places_list.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/fragment_edit.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/fragment_first.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/fragment_second.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/fragment_view.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/layout/text_row_layout.xml" value="0.358695652173913" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/menu/menu_main.xml" value="0.36666666666666664" />
         <entry key="..\:/AndroidPrograming/MyPlaces/app/src/main/res/menu/menu_my_places_list.xml" value="0.36666666666666664" />

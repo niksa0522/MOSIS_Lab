@@ -30,28 +30,35 @@ class MainActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
+
+        navController.addOnDestinationChangedListener{controller,destination,arguments->
+            if(destination.id == R.id.editFragment || destination.id == R.id.viewFragment){
+                binding.fab.hide()
+            }
+            else{
+                binding.fab.show()
+            }
+        }
         binding.fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
+            if(navController.currentDestination?.id==R.id.HomeFragment){
+                navController.navigate(R.id.action_HomeFragment_to_editFragment)
+            }else if(navController.currentDestination?.id==R.id.ListFragment){
+                navController.navigate(R.id.action_ListFragment_to_editFragment)
+            }
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        menuInflater.inflate(R.menu.menu_main, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when(item.itemId){
             R.id.action_show_map -> Toast.makeText(this,"Show Map!", Toast.LENGTH_SHORT).show()
-            R.id.action_new_place -> Toast.makeText(this,"New Place!", Toast.LENGTH_SHORT).show()
+            //R.id.action_new_place -> Toast.makeText(this,"New Place!", Toast.LENGTH_SHORT).show()
             R.id.action_my_places_list -> {
-                val i: Intent = Intent(this,MyPlacesList::class.java)
-                startActivity(i)
+               findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_HomeFragment_to_ListFragment)
             }
             R.id.action_about -> {
                 val i: Intent = Intent(this,About::class.java)
@@ -59,7 +66,9 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
+    }*/
+
+
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
