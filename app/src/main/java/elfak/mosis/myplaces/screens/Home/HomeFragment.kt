@@ -1,9 +1,10 @@
-package elfak.mosis.myplaces
+package elfak.mosis.myplaces.screens.Home
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import elfak.mosis.myplaces.R
 
 import elfak.mosis.myplaces.databinding.FragmentHomeBinding
 
@@ -39,9 +40,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonFirst.setOnClickListener {
-            findNavController().navigate(R.id.action_HomeFragment_to_ListFragment)
-        }
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
@@ -49,7 +47,7 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(R.id.action_HomeFragment_to_ListFragment)
                 true
             }
-            R.id.action_new_place->{
+            R.id.action_new_place ->{
                 findNavController().navigate(R.id.action_HomeFragment_to_editFragment)
                 true
             }

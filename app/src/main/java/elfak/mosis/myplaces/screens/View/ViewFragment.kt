@@ -1,4 +1,4 @@
-package elfak.mosis.myplaces
+package elfak.mosis.myplaces.screens.View
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -33,13 +33,15 @@ class ViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.viewmyplaceNameText.text=viewModel.selected?.name
-        binding.viewmyplaceDescText.text=viewModel.selected?.description
-
+        viewModel.selected.let {
+            binding.viewmyplaceNameText.text=it?.name
+            binding.viewmyplaceDescText.text=it?.description
+            binding.viewmyplaceLatitudeText.text=it?.latitude
+            binding.viewmyplaceLongitudeText.text=it?.longitude
+        }
 
         binding.viewmyplaceFinishedButton.setOnClickListener {
-            viewModel.selected = null
-            findNavController().navigate(R.id.action_viewFragment_to_ListFragment)
+            findNavController().popBackStack()
         }
     }
     override fun onDestroyView() {

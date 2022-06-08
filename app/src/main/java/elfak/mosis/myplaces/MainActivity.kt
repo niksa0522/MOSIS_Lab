@@ -11,12 +11,18 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.navigation.NavController
 import elfak.mosis.myplaces.databinding.ActivityMainBinding
+import elfak.mosis.myplaces.model.MyPlacesViewModel
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityMainBinding
+    private lateinit var navController: NavController
+
+    private val viewModel:MyPlacesViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbar)
 
-        val navController = findNavController(R.id.nav_host_fragment_content_main)
+        navController = findNavController(R.id.nav_host_fragment_content_main)
         appBarConfiguration = AppBarConfiguration(navController.graph)
         setupActionBarWithNavController(navController, appBarConfiguration)
 
@@ -39,26 +45,38 @@ class MainActivity : AppCompatActivity() {
                 binding.fab.show()
             }
         }
-        binding.fab.setOnClickListener { view ->
+        binding.fab.setOnClickListener {
+                //OVO SAM NASAO I POPRAVICU GA
+                view ->
             if(navController.currentDestination?.id==R.id.HomeFragment){
+                //sta ako sam na mapu izaberem, on misli da radim sa postojecim
+                viewModel.selected=null
                 navController.navigate(R.id.action_HomeFragment_to_editFragment)
             }else if(navController.currentDestination?.id==R.id.ListFragment){
+                //sta ako sam na mapu izaberem jedan, vratim se na listu i kliknem add, on misli da radim sa postojecim
+                viewModel.selected=null
                 navController.navigate(R.id.action_ListFragment_to_editFragment)
+            }else if(navController.currentDestination?.id==R.id.mapFragment){
+                //sta ako sam na mapi i kliknem add, on misli da radim sa postojecim
+                viewModel.selected=null
+                navController.navigate(R.id.action_mapFragment_to_editFragment)
             }
         }
     }
 
 
 
-    /*override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         when(item.itemId){
-            R.id.action_show_map -> Toast.makeText(this,"Show Map!", Toast.LENGTH_SHORT).show()
-            //R.id.action_new_place -> Toast.makeText(this,"New Place!", Toast.LENGTH_SHORT).show()
-            R.id.action_my_places_list -> {
-               findNavController(R.id.nav_host_fragment_content_main).navigate(R.id.action_HomeFragment_to_ListFragment)
+            R.id.action_show_map -> {
+                if(navController.currentDestination?.id==R.id.HomeFragment){
+                    navController.navigate(R.id.action_HomeFragment_to_mapFragment)
+                }else if(navController.currentDestination?.id==R.id.ListFragment){
+                    navController.navigate(R.id.action_ListFragment_to_mapFragment)
+                }
             }
             R.id.action_about -> {
                 val i: Intent = Intent(this,About::class.java)
@@ -66,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }*/
+    }
 
 
 

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/HomeFragment"
-        android:name="elfak.mosis.myplaces.HomeFragment"
+        android:name="elfak.mosis.myplaces.screens.Home.HomeFragment"
         android:label="@string/first_fragment_label"
         tools:layout="@layout/fragment_home">
         <action
@@ -16,41 +16,47 @@
         <action
             android:id="@+id/action_HomeFragment_to_ListFragment"
             app:destination="@id/ListFragment" />
+        <action
+            android:id="@+id/action_HomeFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/ListFragment"
-        android:name="elfak.mosis.myplaces.ListFragment"
+        android:name="elfak.mosis.myplaces.screens.List.ListFragment"
         android:label="@string/second_fragment_label"
         tools:layout="@layout/fragment_list">
-        <action
-            android:id="@+id/action_ListFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
         <action
             android:id="@+id/action_ListFragment_to_editFragment"
             app:destination="@id/editFragment" />
         <action
             android:id="@+id/action_ListFragment_to_viewFragment"
             app:destination="@id/viewFragment" />
+        <action
+            android:id="@+id/action_ListFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/editFragment"
-        android:name="elfak.mosis.myplaces.EditFragment"
+        android:name="elfak.mosis.myplaces.screens.Edit.EditFragment"
         android:label="Edit Fragment"
         tools:layout="@layout/fragment_edit" >
         <action
-            android:id="@+id/action_editFragment_to_ListFragment"
-            app:destination="@id/ListFragment" />
-        <action
-            android:id="@+id/action_editFragment_to_HomeFragment"
-            app:destination="@id/HomeFragment" />
+            android:id="@+id/action_editFragment_to_mapFragment"
+            app:destination="@id/mapFragment" />
     </fragment>
     <fragment
         android:id="@+id/viewFragment"
-        android:name="elfak.mosis.myplaces.ViewFragment"
+        android:name="elfak.mosis.myplaces.screens.View.ViewFragment"
         android:label="View Fragment"
         tools:layout="@layout/fragment_view" >
+    </fragment>
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="elfak.mosis.myplaces.screens.Map.MapFragment"
+        android:label="fragment_map"
+        tools:layout="@layout/fragment_map" >
         <action
-            android:id="@+id/action_viewFragment_to_ListFragment"
-            app:destination="@id/ListFragment" />
+            android:id="@+id/action_mapFragment_to_editFragment"
+            app:destination="@id/editFragment" />
     </fragment>
 </navigation>

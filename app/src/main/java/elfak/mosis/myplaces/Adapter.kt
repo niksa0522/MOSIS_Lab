@@ -52,6 +52,7 @@ class Adapter(private val places: List<MyPlace>,private val listener:OnClickNavi
             p0?.add(0,1,1, "View place")
             p0?.add(0,2,2, "Edit place")
             p0?.add(0,3,3, "Delete place")
+            p0?.add(0,4,4, "Show on map")
         }
     }
 

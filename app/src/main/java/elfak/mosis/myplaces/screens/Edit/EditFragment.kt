@@ -1,4 +1,4 @@
-package elfak.mosis.myplaces
+package elfak.mosis.myplaces.screens.Edit
 
 import android.os.Bundle
 import android.text.Editable
@@ -10,10 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
+import elfak.mosis.myplaces.R
 import elfak.mosis.myplaces.data.MyPlace
 import elfak.mosis.myplaces.databinding.FragmentEditBinding
-import elfak.mosis.myplaces.databinding.FragmentListBinding
+import elfak.mosis.myplaces.model.LocationViewModel
 import elfak.mosis.myplaces.model.MyPlacesViewModel
 
 
@@ -22,6 +22,7 @@ class EditFragment : Fragment() {
 
     private var _binding: FragmentEditBinding? = null
     private val viewModel: MyPlacesViewModel by activityViewModels()
+    private val mapViewModel: LocationViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -33,9 +34,7 @@ class EditFragment : Fragment() {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main,menu)
-    }
+
 
 
     override fun onCreateView(
@@ -52,10 +51,18 @@ class EditFragment : Fragment() {
         if(viewModel.selected!=null){
             binding.editmyplaceNameEdit.setText(viewModel.selected!!.name)
             binding.editmyplaceDescEdit.setText(viewModel.selected!!.description)
-
+            binding.editmyplaceLatitudeEdit.setText(viewModel.selected!!.latitude)
+            binding.editmyplaceLongitudeEdit.setText(viewModel.selected!!.longitude)
         }
         else{
             (activity as AppCompatActivity).supportActionBar?.title = "Add Place"
+        }
+
+        mapViewModel.longitude.observe(viewLifecycleOwner){
+            binding.editmyplaceLongitudeEdit.setText(it)
+        }
+        mapViewModel.latitude.observe(viewLifecycleOwner){
+            binding.editmyplaceLatitudeEdit.setText(it)
         }
 
 
@@ -82,24 +89,35 @@ class EditFragment : Fragment() {
             }
 
         })
+        binding.editmyplaceLocationButton.setOnClickListener {
+            mapViewModel.setLocation=true
+            findNavController().navigate(R.id.action_editFragment_to_mapFragment)
+        }
         addButton.setOnClickListener {
             val editName: EditText = binding.editmyplaceNameEdit
             val name = editName.text.toString()
             val editDesc = binding.editmyplaceDescEdit
             val desc = editDesc.text.toString()
+            val longitude= binding.editmyplaceLongitudeEdit.text.toString()
+            val latitude = binding.editmyplaceLatitudeEdit.text.toString()
             if(viewModel.selected!=null){
                 viewModel.selected!!.name=name
                 viewModel.selected!!.description=desc
+                viewModel.selected!!.latitude=latitude
+                viewModel.selected!!.longitude=longitude
             }
             else{
-                viewModel.addPlace(MyPlace(name,desc))
+                viewModel.addPlace(MyPlace(name,desc,longitude,latitude))
             }
-
-            findNavController().navigate(R.id.action_editFragment_to_ListFragment)
+            viewModel.selected=null
+            mapViewModel.setLocation("","")
+            findNavController().popBackStack()
         }
         val cancelButton:Button = binding.editmyplaceCancelButton
         cancelButton.setOnClickListener {
-            findNavController().navigate(R.id.action_editFragment_to_ListFragment)
+            viewModel.selected=null
+            mapViewModel.setLocation("","")
+            findNavController().popBackStack()
         }
 
 
@@ -108,24 +126,8 @@ class EditFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        viewModel.selected=null
     }
 
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
-            R.id.action_my_places_list ->{
-                findNavController().navigate(R.id.action_editFragment_to_ListFragment)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-    override fun onPrepareOptionsMenu(menu: Menu) {
-        super.onPrepareOptionsMenu(menu)
-        val item = menu.findItem(R.id.action_new_place)
-        item.isVisible=false
-    }
 }
 
 

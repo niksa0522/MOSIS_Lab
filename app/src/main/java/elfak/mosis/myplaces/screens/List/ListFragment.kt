@@ -1,9 +1,7 @@
-package elfak.mosis.myplaces
+package elfak.mosis.myplaces.screens.List
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -11,6 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import elfak.mosis.myplaces.Adapter
+import elfak.mosis.myplaces.R
 import elfak.mosis.myplaces.data.MyPlace
 import elfak.mosis.myplaces.databinding.FragmentListBinding
 import elfak.mosis.myplaces.model.MyPlacesViewModel
@@ -18,11 +18,11 @@ import elfak.mosis.myplaces.model.MyPlacesViewModel
 /**
  * A simple [Fragment] subclass as the second destination in the navigation.
  */
-class ListFragment : Fragment(),Adapter.OnClickNavigate {
+class ListFragment : Fragment(), Adapter.OnClickNavigate {
 
     private var _binding: FragmentListBinding? = null
     private lateinit var recyclerView: RecyclerView
-    private lateinit var adapter:Adapter
+    private lateinit var adapter: Adapter
     private val viewModel:MyPlacesViewModel by activityViewModels()
 
     // This property is only valid between onCreateView and
@@ -86,7 +86,14 @@ class ListFragment : Fragment(),Adapter.OnClickNavigate {
             findNavController().navigate(R.id.action_ListFragment_to_editFragment)
         }
         else if(item.itemId==3){
+            viewModel.myPlacesList.removeAt(position)
+            //10 puta bolje resenje je sa live data
+            adapter = Adapter(viewModel.myPlacesList,this)
+            recyclerView.adapter=adapter
             Toast.makeText(context,"Delete item",Toast.LENGTH_SHORT).show()
+        }else if(item.itemId==4){
+            viewModel.selected=viewModel.myPlacesList[position]
+            findNavController().navigate(R.id.action_ListFragment_to_mapFragment)
         }
         return super.onContextItemSelected(item)
     }
@@ -101,6 +108,8 @@ class ListFragment : Fragment(),Adapter.OnClickNavigate {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_new_place ->{
+                //ovde postoji mogucnost da selektujem na mapu, vratim se i onda dodam novi on misli da radim sa postojecim
+                viewModel.selected=null
                 findNavController().navigate(R.id.action_ListFragment_to_editFragment)
                 true
             }
